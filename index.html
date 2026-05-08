@@ -1,1 +1,562 @@
-Hello! I'm Miaofen Chen
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miaofen Chen | Fudan University</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fafafa;
+            --text: #1a1a1a;
+            --text-light: #555;
+            --accent: #9d1e22;
+            --accent-dark: #7a171a;
+            --card: #ffffff;
+            --border: #e8e0e0;
+            --sidebar: #f8f4f4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        /* Language Switch */
+        .lang-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(250, 249, 247, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .lang-bar-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: 20px;
+            padding: 3px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-light);
+            transition: border-color 0.3s;
+        }
+
+        .lang-toggle:hover {
+            border-color: var(--accent);
+        }
+
+
+
+        .lang-toggle span {
+            padding: 4px 12px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-toggle span.active {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* Main Layout */
+        .page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 24px 40px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 48px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            align-self: start;
+        }
+
+        .photo-wrap {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .photo-wrap::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: -12px;
+            bottom: -12px;
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .photo-wrap img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            border-radius: 12px;
+            display: block;
+            background: var(--sidebar);
+        }
+
+        .name-big {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .title-big {
+            font-size: 0.92rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .cv-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: all 0.25s ease;
+        }
+
+        .cv-row:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 16px rgba(157, 30, 34, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .cv-row svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            stroke: var(--accent);
+        }
+
+        .cv-row .cv-meta {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .contact-mini {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-mini a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            transition: color 0.2s;
+        }
+
+        .contact-mini a:hover {
+            color: var(--accent);
+        }
+
+        .contact-mini svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            flex-shrink: 0;
+        }
+
+        /* Main Content */
+        .main h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        .section {
+            margin-bottom: 48px;
+            animation: fadeUp 0.7s ease both;
+        }
+
+        .section:nth-child(2) { animation-delay: 0.1s; }
+        .section:nth-child(3) { animation-delay: 0.2s; }
+        .section:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .about-text {
+            font-size: 1.02rem;
+            color: #444;
+            text-align: justify;
+            line-height: 1.85;
+        }
+
+        .about-text p {
+            margin-bottom: 14px;
+        }
+
+        /* Publications */
+        .pub-list {
+            list-style: none;
+        }
+
+        .pub-item {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            transition: padding-left 0.25s ease;
+        }
+
+        .pub-item:hover {
+            padding-left: 8px;
+        }
+
+        .pub-item:first-child {
+            padding-top: 0;
+        }
+
+        .pub-item:last-child {
+            border-bottom: none;
+        }
+
+        .pub-title {
+            display: block;
+            font-weight: 600;
+            font-size: 1.02rem;
+            color: var(--text);
+            margin-bottom: 4px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .pub-title:hover {
+            color: var(--accent);
+        }
+
+        .pub-authors {
+            color: var(--text-light);
+            font-size: 0.92rem;
+            margin-bottom: 2px;
+        }
+
+        .pub-venue {
+            color: var(--accent);
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+
+        .pub-year {
+            display: inline-block;
+            background: var(--sidebar);
+            color: var(--text-light);
+            font-size: 0.78rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+
+        /* Contact section in main */
+        .contact-block {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .contact-block p {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .contact-block p:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-block svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--accent);
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        /* Footer */
+        footer {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px;
+            text-align: center;
+            color: #aaa;
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Responsive */
+        @media (max-width: 800px) {
+            .page {
+                grid-template-columns: 1fr;
+                padding-top: 72px;
+                gap: 32px;
+            }
+            .sidebar {
+                position: static;
+                display: grid;
+                grid-template-columns: 140px 1fr;
+                gap: 20px;
+                align-items: start;
+            }
+            .photo-wrap {
+                margin-bottom: 0;
+            }
+            .photo-wrap::before {
+                top: 8px;
+                left: 8px;
+                right: -8px;
+                bottom: -8px;
+            }
+            .name-big {
+                font-size: 1.6rem;
+            }
+            .contact-mini {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .photo-wrap {
+                max-width: 180px;
+                margin: 0 auto 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Bar -->
+    <div class="lang-bar">
+        <div class="lang-bar-inner">
+            <div class="lang-toggle" onclick="toggleLang()">
+                <span id="lang-en" class="active">EN</span>
+                <span id="lang-zh">中</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="page">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="photo-wrap">
+                <img src="photo.jpg" alt="Miaofen Chen" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"280\" height=\"373\"%3E%3Crect width=\"280\" height=\"373\" fill=\"%23f0eeeb\"/%3E%3Ctext x=\"50%25\" y=\"50%25\" dominant-baseline=\"middle\" text-anchor=\"middle\" fill=\"%23bbb\" font-size=\"14\" font-family=\"Inter,sans-serif\"%3EPhoto%3C/text%3E%3C/svg%3E'">
+            </div>
+            <div class="sidebar-info">
+                <div class="name-big" data-en="Miaofen Chen" data-zh="陈苗芬">Miaofen Chen</div>
+                <div class="title-big" data-en="Professor&lt;br&gt;Shanghai Center for Mathematical Sciences&lt;br&gt;Fudan University" data-zh="教授&lt;br&gt;复旦大学上海数学中心">Professor<br>Shanghai Center for Mathematical Sciences<br>Fudan University</div>
+
+                <a href="cv.pdf" class="cv-row" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <div>
+                        <div data-en="Curriculum Vitae" data-zh="个人简历">Curriculum Vitae</div>
+                        <div class="cv-meta">PDF</div>
+                    </div>
+                </a>
+
+                <div class="contact-mini">
+                    <a id="email-mini" href="#">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        <span>email</span>
+                    </a>
+                    <a href="#" style="pointer-events:none;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span data-en="Shanghai, China" data-zh="中国上海">Shanghai, China</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="main">
+            <section class="section">
+                <h2 data-en="About" data-zh="关于我">About</h2>
+                <div class="about-text">
+                    <p data-en="I am a Professor at the Shanghai Center for Mathematical Sciences, Fudan University. My research focuses on algebra and related areas, including representation theory and its connections to geometry and mathematical physics. You can add more details about your research interests, education, and work experience here." 
+                       data-zh="我是复旦大学上海数学中心的教授。我的研究方向主要聚焦于代数及相关领域，包括表示论及其与几何、数学物理的联系。此处可填写更详细的自我介绍、研究兴趣、教育背景、工作经历等内容。">
+                       I am a Professor at the Shanghai Center for Mathematical Sciences, Fudan University. My research focuses on algebra and related areas, including representation theory and its connections to geometry and mathematical physics. You can add more details about your research interests, education, and work experience here.
+                    </p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 data-en="Publications" data-zh="发表论文">Publications</h2>
+                <ol class="pub-list">
+                    <li class="pub-item">
+                        <a href="https://arxiv.org/abs/2402.15107" target="_blank" class="pub-title">On the weak Harder–Narasimhan stratification on $B_{\mathrm{dR}}^+$-affine Grassmannian</a>
+                        <div class="pub-authors">M. Chen, J. Tong</div>
+                        <div class="pub-venue">Compositio Mathematica<span class="pub-year">2025</span></div>
+                    </li>
+                    <li class="pub-item">
+                        <a href="https://arxiv.org/abs/2203.12293" target="_blank" class="pub-title">Weakly admissible locus and Newton stratification in p-adic Hodge theory</a>
+                        <div class="pub-authors">M. Chen, J. Tong</div>
+                        <div class="pub-venue">American Journal of Mathematics<span class="pub-year">2026</span></div>
+                    </li>
+                    <li class="pub-item">
+                        <a href="Paper/paper1.pdf" class="pub-title">aaa</a>
+                        <div class="pub-authors">M. Chen</div>
+                        <div class="pub-venue">J. Eur. Math. Soc.<span class="pub-year">2023</span></div>
+                    </li>
+                                        <li class="pub-item">
+                        <a href="https://arxiv.org/abs/2004.01425" target="_blank" class="pub-title">Fargues–Rapoport conjecture for p-adic period domains in the non-basic case</a>
+                        <div class="pub-authors">M. Chen</div>
+                        <div class="pub-venue">J. Eur. Math. Soc.<span class="pub-year">2023</span></div>
+                    </li>
+                    <li class="pub-item">
+                        <a href="https://arxiv.org/abs/1710.06935" target="_blank" class="pub-title">On the structure of some p-adic period domains</a>
+                        <div class="pub-authors">M. Chen, L. Fargues, X. Shen</div>
+                        <div class="pub-venue">Cambridge Journal of Mathematics<span class="pub-year">2021</span></div>
+                    </li>
+                    <li class="pub-item">
+                        <a href="https://doi.org/10.1090/jag/693" target="_blank" class="pub-title">Affine Deligne-Lusztig varieties and the action of J</a>
+                        <div class="pub-authors">M. Chen, E. Viehmann</div>
+                        <div class="pub-venue">Journal of Algebraic Geometry<span class="pub-year">2018</span></div>
+                    </li>
+                    <li class="pub-item">
+                        <a href="https://doi.org/10.1112/S0010437X15007253" target="_blank" class="pub-title">Connected components of affine Deligne-Lusztig varieties in mixed characteristic</a>
+                        <div class="pub-authors">M. Chen, M. Kisin, E. Viehmann</div>
+                        <div class="pub-venue">Compositio Mathematica<span class="pub-year">2015</span></div>
+                    </li>
+                    <li class="pub-item">
+                        <a href="https://doi.org/10.24033/asens.2225" target="_blank" class="pub-title">Composantes connexes géométriques de la tour des espaces de modules de groupes p-divisibles</a>
+                        <div class="pub-authors">M. Chen</div>
+                        <div class="pub-venue">Ann. Sci. Éc. Norm. Supér.<span class="pub-year">2014</span></div>
+                    </li>
+                </ol>
+            </section>
+
+            <section class="section">
+                <h2 data-en="Contact" data-zh="联系方式">Contact</h2>
+                <div class="contact-block">
+                    <p id="email-main-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        <span id="email-main">email</span>
+                    </p>
+                    <p>
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span data-en="Shanghai Center for Mathematical Sciences&lt;br&gt;Fudan University&lt;br&gt;220 Handan Road, Yangpu District, Shanghai 200433, China" data-zh="复旦大学上海数学中心&lt;br&gt;上海市杨浦区邯郸路220号&lt;br&gt;邮编 200433">Shanghai Center for Mathematical Sciences<br>Fudan University<br>220 Handan Road, Yangpu District, Shanghai 200433, China</span>
+                    </p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p> Miaofen Chen</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            applyLang(currentLang);
+        }
+
+        function applyLang(lang) {
+            document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+            document.getElementById('lang-zh').classList.toggle('active', lang === 'zh');
+            document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN';
+
+            document.querySelectorAll('[data-en][data-zh]').forEach(el => {
+                const text = el.getAttribute('data-' + lang);
+                if (text.includes('<br>')) {
+                    el.innerHTML = text;
+                } else {
+                    el.textContent = text;
+                }
+            });
+        }
+
+        applyLang('en');
+
+        // Anti-spam email obfuscation
+        (function() {
+            var e1 = ['y','o','u','r','.','e','m','a','i','l'];
+            var e2 = ['f','u','d','a','n'];
+            var e3 = ['e','d','u'];
+            var e4 = ['c','n'];
+            var email = e1.join('') + '@' + e2.join('') + '.' + e3.join('') + '.' + e4.join('');
+
+            var mini = document.getElementById('email-mini');
+            if (mini) {
+                mini.href = 'mailto:' + email;
+                mini.querySelector('span').textContent = email;
+            }
+
+            var main = document.getElementById('email-main');
+            if (main) {
+                main.innerHTML = '<a href="mailto:' + email + '" style="color:inherit;text-decoration:none;">' + email + '</a>';
+            }
+        })();
+    </script>
+</body>
+</html>
